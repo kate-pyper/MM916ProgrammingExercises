@@ -1,0 +1,53 @@
+---
+title: "Tutorial"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library(testwhat)
+knitr::opts_chunk$set(echo = FALSE)
+tutorial_options(exercise.timelimit = 60, exercise.checker=testwhat::testwhat_learnr())
+
+require(tidyverse)
+penguins<- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-07-28/penguins.csv")
+penguins <- penguins %>%  mutate(Sample_Number=1:nrow(penguins)) %>% pivot_longer(bill_length_mm:body_mass_g, names_to="Measurement", values_to="Observations")
+test <- tibble(Name=rep(c("Kim","Louise","Susan","Johnny","Scott","Stephen","David","Catriona","Rebecca","Donna","Lynne","John","Billy"), each=5), Assessment=rep(1:5, times=13), Grade=c(sample(70:90, 5, replace = TRUE),sample(60:80, 5, replace = TRUE), sample(75:85, 5, replace = TRUE), sample(50:60, 5, replace = TRUE),sample(40:60, 5, replace = TRUE), sample(80:100, 5, replace = TRUE), sample(60:70, 5, replace = TRUE), sample(35:50, 5, replace = TRUE), sample(45:70, 5, replace = TRUE), sample(80:100, 5, replace = TRUE), sample(48:62, 5, replace = TRUE), sample(55:75, 5, replace = TRUE), sample(60:70, 5, replace = TRUE)))
+
+```
+
+
+### Using `pivot_wider()`
+
+In the box below, use the `pivot_wider()` function to get the pre loaded penguins data into tidy data format. 
+
+```{r pivot_wider, exercise=TRUE}
+# tidy the penguins data
+
+
+```
+
+```{r pivot_wider-solution}
+# tidy the penguins data
+penguins %>% pivot_wider(names_from=Measurement, values_from=Observations)
+
+```
+
+
+```{r pivot_wider-check}
+
+ex() %>% {
+  check_error(.)
+  check_function(., "pivot_wider", index=1) %>% {
+    check_arg(., "names_from") %>% check_equal(., eval=FALSE)
+    check_arg(., "values_from") %>% check_equal(., eval=FALSE)
+  }
+  
+  check_function(., "pivot_wider", index=2) %>% {
+    check_arg(., "names_from") %>% check_equal(., eval=FALSE)
+    check_arg(., "values_from") %>% check_equal(., eval=FALSE)
+    check_arg(., "names_prefix") %>% check_equal(., eq_fun=function(x, y){tolower(x)==tolower(y)})
+  }
+
+```
