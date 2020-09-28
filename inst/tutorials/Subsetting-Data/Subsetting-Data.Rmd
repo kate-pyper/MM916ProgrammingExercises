@@ -1,0 +1,96 @@
+---
+title: "Exercise: Subsetting Data"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library(testwhat)
+knitr::opts_chunk$set(echo = FALSE)
+tutorial_options(exercise.timelimit = 60, exercise.checker=testwhat::testwhat_learnr)
+
+require(tidyverse)
+data(mtcars)
+```
+
+For the following examples you should use functions from `dplyr` to extract the relevant pieces of data from the `mtcars` data set:
+
+```{r show_data}
+
+head(mtcars)
+
+```
+
+### Exercise 1
+
+Find the cars which get at least 20 miles per gallon (`mpg`).
+
+```{r filter1, exercise=TRUE}
+
+
+```
+
+```{r filter1-solution}
+# tidy the penguins data
+mtcars %>% filter(mpg>=20) %>% arrange(mpg)
+
+```
+
+
+```{r filter1-check}
+
+ex() %>% {
+  check_error(.)
+  check_function(., "filter", index=1) %>% check_result(.) %>% check_equal(.)
+}
+```
+
+### Exercise 2
+
+Order the data in `mtcars` by highest to lowest weight (`wt`) 
+
+```{r filter2, exercise=TRUE}
+
+
+```
+
+```{r filter2-solution}
+
+mtcars %>% arrange(desc(wt))
+
+```
+
+```{r filter2-check}
+ex() %>%{
+  check_error(.)
+  check_function(., "arrange") %>% check_result(.) %>% check_equal(., incorrect_msg="Did you sort the data in decreasing order?")
+}
+```
+
+
+### Exercise 3
+
+Extract the rows from the `mtcars` data set where the number of gears (`gear`) is not equal to 4. Order the results by increasing horsepower (`hp`)
+
+```{r filter3, exercise=TRUE}
+
+
+```
+
+```{r filter3-solution}
+
+mtcars %>% filter(gear!=4) %>% arrange(hp)
+
+```
+
+```{r filter3-check}
+ex() %>%{
+  check_error(.)
+  check_or(.,
+           {check_function(.,"filter") %>% check_result(.) %>% check_equal(.)
+             check_function(.,"arrange") %>% check_result(.) %>% check_equal(.)},
+           override_solution_code(., "mtcars %>% arrange(hp) %>% filter(gear!=4)") %>% {check_function(.,"arrange") %>% check_result(.) %>% check_equal(.)
+             check_function(.,"filter") %>% check_result(.) %>% check_equal(.)})
+}
+```

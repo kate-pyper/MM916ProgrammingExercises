@@ -1,0 +1,77 @@
+---
+title: "Exercise: Transforming Data"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library(testwhat)
+knitr::opts_chunk$set(echo = FALSE)
+tutorial_options(exercise.timelimit = 60, exercise.checker=testwhat::testwhat_learnr)
+
+require(tidyverse)
+data(mtcars)
+```
+
+For the following examples you should use functions from `dplyr` to carry out the relevant transformations on the `mtcars` data set:
+
+```{r show_data}
+
+head(mtcars)
+
+```
+
+### Exercise 1
+
+The horse-power data in the `mtcars` data set are skewed:
+
+```{r}
+hist(mtcars$hp)
+```
+
+Add a new column to the data set, which contains the square root of `hp`
+
+```{r filter1, exercise=TRUE}
+
+
+
+```
+
+```{r filter1-solution}
+# tidy the penguins data
+mtcars %>% mutate(sqrt_hp=sqrt(hp))
+
+```
+
+
+```{r filter1-check}
+
+ex() %>% {
+  check_error(.)
+  check_function(., "mutate") %>% check_result(.) %>% check_equal(.)
+}
+```
+
+### Exercise 2
+
+Standardise the `mpg` column using the standard deviation. Distinguish between automatic and manual transmissions (`am`) 
+
+```{r filter2, exercise=TRUE}
+
+
+```
+
+```{r filter2-solution}
+
+mtcars %>% group_by(am) %>% mutate(mpg_std = mpg/sd(mpg))
+
+```
+
+```{r filter2-check}
+ex() %>%{
+  check_error(.)
+  check_function(., "group_by") 
+  check_function(., "mutate")%>% check_result(.) %>% check_equal(., incorrect_msg="Did you group by transmission type before using mutate? Try checking your calculation - you should divide mpg by its standard deviation.")
+}
+```

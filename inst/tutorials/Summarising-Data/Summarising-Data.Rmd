@@ -1,0 +1,118 @@
+---
+title: "Exercise: Summarising Data"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library(testwhat)
+knitr::opts_chunk$set(echo = FALSE)
+tutorial_options(exercise.timelimit = 60, exercise.checker=testwhat::testwhat_learnr)
+
+require(tidyverse)
+data(mtcars)
+```
+
+For the following examples you should use functions from `dplyr` to extract the relevant pieces of information from the `mtcars` data set:
+
+```{r show_data}
+
+head(mtcars)
+
+```
+
+### Exercise 1
+
+Find the average miles per gallon (`mpg`) for cars after distinguishing between the number of gears (`gear`) that a car has.
+
+```{r filter1, exercise=TRUE}
+
+
+```
+
+```{r filter1-solution}
+# tidy the penguins data
+mtcars %>% group_by(gear) %>% summarise(Average=mean(mpg))
+
+```
+
+
+```{r filter1-check}
+
+ex() %>% {
+  check_error(.)
+  check_function(., "group_by", not_called_msg="You should use group_by to find a grouped summary") %>% check_result(.) %>% check_equal(.)
+  check_function(., "summarise") %>% check_result(.) %>% check_equal(., incorrect_msg="Check your grouping variable, and make sure that you have used the mean function correctly")
+}
+```
+
+```{r Question1, echo=FALSE}
+question("Which value of gears had the lowest mpg?",
+  answer("3", correct=TRUE),
+  answer("4"),
+  answer("5"), 
+  correct="Yes - Cars with fewer gears are less fuel efficient!"
+)
+```
+
+
+### Exercise 2
+
+Find the median horse-power (`hp`) after taking into account engine type (`vs`) and transmission type (`am`)  
+
+```{r filter2, exercise=TRUE}
+
+
+```
+
+```{r filter2-solution}
+
+mtcars %>% group_by(vs, am) %>% summarise(Med_hp=median(hp))
+
+```
+
+```{r filter2-check}
+ex() %>%{
+  check_error(.)
+  check_or(.,
+           {check_function(., "group_by") %>% check_result(.) %>% check_equal(., incorrect_msg="Check the way you have grouped the data. Does this match what is in the question?")
+             check_function(., "median")
+  check_function(., "summarise") %>% check_result(.) %>% check_equal(.)},
+  {override_solution_code(., "mtcars %>% group_by(am, vs) %>% summarise(Med_hp=median(hp))") %>% {check_function(., "group_by") %>% check_result(.) %>% check_equal(., incorrect_msg="Check the way you have grouped the data. Does this match what is in the question? Have you calculated the correct summary?")
+  check_function(., "summarise") %>% check_result(.) %>% check_equal(.)}})
+}
+```
+
+
+### Exercise 3
+
+Use the `quantile()` function to extract the 25th and 75th percentiles (lower and upper quartiles) of the weight column (`wt`) after grouping by the number of cylinders (`cyl`).  
+
+```{r filter3, exercise=TRUE}
+
+
+```
+
+```{r filter3-solution}
+
+mtcars %>% group_by(cyl) %>% summarise(Quartiles=quantile(wt, c(0.25, 0.75)))
+
+```
+
+```{r filter3-check}
+ex() %>% {
+  check_error(.)
+  check_function(., "group_by", not_called_msg="You should use group_by to find a grouped summary") %>% check_result(.) %>% check_equal(.)
+  check_function(., "summarise") %>% check_result(.) %>% check_equal(., incorrect_msg="Make sure that you have grouped by the correct variable. Have you specified the correct probabilities in the quantile function?")
+}
+```
+
+```{r Question2, echo=FALSE}
+question("It can be a bad idea to do this sort of summary...why?",
+  answer("The quantile function returns multiple values and so is not compatible with the summary function"),
+  answer("The output is not labelled so it is easy to mix up the values", correct=TRUE),
+  answer("It isn't compatible with tidy data principles"), 
+  correct="Yes - in this case it is clear that the lower of each pair is the lower quartile, but it is not always so clear cut"
+)
+```

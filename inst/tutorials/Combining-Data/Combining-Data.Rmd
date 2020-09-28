@@ -1,0 +1,173 @@
+---
+title: "Exercise: Combining Multiple Data Sets"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library(testwhat)
+knitr::opts_chunk$set(echo = FALSE)
+tutorial_options(exercise.timelimit = 60, exercise.checker=testwhat::testwhat_learnr)
+
+require(tidyverse)
+colour <- tibble(Name=c("Sophie","Lauren","Greg","Callum","Ainsley","Alistair"), colour=sample(c("Pink","Blue","Red","Green","Purple","Yellow")))
+
+pet <- tibble(Name=c("Stacey","Lauren","Ainsley","Graham","Chris","Greg"), Pet=c("Dog","Cat","Dog","Fish","Hamster","Cat"))
+```
+
+I have two data sets, `colour` and `pet`, which are shown below:
+
+```{r exercise1_setup}
+
+knitr::kable(colour)
+
+knitr::kable(pet)
+
+
+```
+
+
+### Exercise 1
+
+I want to keep all rows in both data sets while merging rows which have a match.
+
+```{r Question1, echo=FALSE}
+question("What type of join could you use here?",
+  answer("left"),
+  answer("right"),
+  answer("full", correct=TRUE),
+  answer("inner"),
+  answer("anti"),
+  answer("semi")
+)
+```
+
+What would the code be to do this in R?
+
+
+
+```{r exercise1, exercise=TRUE}
+
+```
+
+
+```{r exercise1-solution}
+
+colour %>% full_join(pet)
+
+```
+
+```{r exercise1-check}
+
+# this is really unsatisfying - come back to this at some point
+ex() %>% check_function("full_join") %>% check_result()
+
+
+```
+
+### Exercise 2
+
+I want to merge the two data sets but only keep the rows in both data sets which have a match.
+
+```{r Question2, echo=FALSE}
+question("What type of join could you use here?",
+  answer("left"),
+  answer("right"),
+  answer("full"),
+  answer("inner", correct=TRUE),
+  answer("anti"),
+  answer("semi")
+)
+```
+
+What would the code be to do this in R?
+
+```{r exercise2, exercise=TRUE}
+
+```
+
+```{r exercise2-solution}
+
+colour %>% inner_join(pet)
+
+```
+
+```{r exercise2-check}
+
+# this is really unsatisfying - come back to this at some point
+ex() %>% check_function("inner_join") %>% check_result()
+
+
+```
+
+### Exercise 3
+
+I want to keep all the rows in the pets data set that have a match in the colour data set - I do not want to merge the data sets.
+
+```{r Question3, echo=FALSE}
+question("What type of join could you use here?",
+  answer("left"),
+  answer("right"),
+  answer("full"),
+  answer("inner"),
+  answer("anti"),
+  answer("semi", correct=TRUE)
+)
+```
+
+What would the code be to do this in R?
+
+```{r exercise3, exercise=TRUE}
+
+```
+
+```{r exercise3-solution}
+
+pet %>% semi_join(colour)
+
+```
+
+```{r exercise3-check, exercise.setup="exercise1_setup"}
+
+# this is really unsatisfying - come back to this at some point
+ex() %>% check_function("semi_join") %>% check_result()
+
+
+```
+
+### Exercise 4
+
+I want to keep all the rows in the colour data set that have a match in the pet data set - I do not want to merge the data sets.
+
+```{r Question4, echo=FALSE}
+question("What type of join could you use here?",
+  answer("left"),
+  answer("right"),
+  answer("full"),
+  answer("inner"),
+  answer("anti", correct=TRUE),
+  answer("semi")
+)
+```
+
+What would the code be to do this in R?
+
+```{r exercise4, exercise=TRUE}
+
+```
+
+
+```{r exercise3-solution}
+
+colour %>% anti_join(pet)
+
+```
+
+```{r exercise3-check, exercise.setup="exercise1_setup"}
+
+# this is really unsatisfying - come back to this at some point
+ex() %>% check_function("anti_join") %>% check_result()
+
+
+```

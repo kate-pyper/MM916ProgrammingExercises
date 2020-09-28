@@ -1,5 +1,5 @@
 ---
-title: "Tutorial"
+title: "Exercise: pivot_wider"
 output: learnr::tutorial
 runtime: shiny_prerendered
 ---
@@ -8,7 +8,7 @@ runtime: shiny_prerendered
 library(learnr)
 library(testwhat)
 knitr::opts_chunk$set(echo = FALSE)
-tutorial_options(exercise.timelimit = 60, exercise.checker=testwhat::testwhat_learnr())
+tutorial_options(exercise.timelimit = 60, exercise.checker=testwhat::testwhat_learnr)
 
 require(tidyverse)
 penguins<- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-07-28/penguins.csv")
@@ -18,24 +18,30 @@ test <- tibble(Name=rep(c("Kim","Louise","Susan","Johnny","Scott","Stephen","Dav
 ```
 
 
-### Using `pivot_wider()`
+### Exercise 1
 
-In the box below, use the `pivot_wider()` function to get the pre loaded penguins data into tidy data format. 
+The data set `penguins` has been transformed into the following format:
 
-```{r pivot_wider, exercise=TRUE}
+```{r peguins_print, echo=FALSE}
+penguins
+```
+
+In the box below, use the `pivot_wider()` function to get the pre-loaded penguins data into tidy data format, where each measurement is in its own column. 
+
+```{r pivot_wider1, exercise=TRUE}
 # tidy the penguins data
 
 
 ```
 
-```{r pivot_wider-solution}
+```{r pivot_wider1-solution}
 # tidy the penguins data
 penguins %>% pivot_wider(names_from=Measurement, values_from=Observations)
 
 ```
 
 
-```{r pivot_wider-check}
+```{r pivot_wider1-check}
 
 ex() %>% {
   check_error(.)
@@ -43,11 +49,41 @@ ex() %>% {
     check_arg(., "names_from") %>% check_equal(., eval=FALSE)
     check_arg(., "values_from") %>% check_equal(., eval=FALSE)
   }
-  
-  check_function(., "pivot_wider", index=2) %>% {
-    check_arg(., "names_from") %>% check_equal(., eval=FALSE)
-    check_arg(., "values_from") %>% check_equal(., eval=FALSE)
-    check_arg(., "names_prefix") %>% check_equal(., eq_fun=function(x, y){tolower(x)==tolower(y)})
-  }
+}
+```
+
+### Exercise 2
+
+A data set containing student grades across five different assessments has been loaded into an R session. The data is stored in a data frame called `test` and is shown below:
+
+```{r print_grades, echo=FALSE}
+
+test
 
 ```
+
+In the box below, get the data into tidy format, where each assessment forms a column. Make sure to name the columns appropriately by adding "Assessment" to the assessment numbers:
+
+```{r pivot_wider2, exercise=TRUE}
+
+# tidy the test data set
+
+```
+
+```{r pivot_wider2-solution}
+
+test %>% pivot_wider(names_from=Assessment, values_from=Grade, names_prefix="Assessment")
+
+```
+
+```{r pivot_wider2-check}
+ex() %>%{
+  check_error(.)
+  check_function(., "pivot_wider") %>% {
+    check_arg(., "names_from") %>% check_equal(., eval=FALSE, eq_fun=function(x,y) {stringr::str_extract(x, "[[:alpha:]]+" )==stringr::str_extract(y, "[[:alpha:]]+" )})
+    check_arg(., "values_from") %>% check_equal(., eval=FALSE, eq_fun=function(x,y) {stringr::str_extract(x, "[[:alpha:]]+" )==stringr::str_extract(y, "[[:alpha:]]+" )})
+    check_arg(., "names_prefix") %>% check_equal(., eq_fun=function(x, y){tolower(x)==tolower(y)})
+  }
+}
+```
+
