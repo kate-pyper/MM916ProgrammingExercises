@@ -96,3 +96,28 @@ ex() %>%{
              check_function(.,"filter") %>% check_result(.) %>% check_equal(.)})
 }
 ```
+
+
+### Exercise 4
+
+Extract all of the columns from `mtcars` from `hp` to `vs`.
+
+```{r exercise4, exercise=TRUE}
+
+
+
+```
+
+
+```{r exercise4-solution}
+
+mtcars %>% select(hp:vs)
+
+```
+
+```{r exercise4-check}
+ex() %>%{
+  check_error(.)
+  check_function(.,"select") %>% check_result(.) %>% check_equal(.)
+}
+```

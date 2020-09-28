@@ -14,6 +14,7 @@ tutorial_options(exercise.timelimit = 60, exercise.checker=testwhat::testwhat_le
 
 require(tidyverse)
 data(mtcars)
+penguins<- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-07-28/penguins.csv")
 ```
 
 For the following examples you should use functions from `dplyr` to carry out the relevant transformations on the `mtcars` data set:
@@ -75,5 +76,33 @@ ex() %>%{
   check_error(.)
   check_function(., "group_by") 
   check_function(., "mutate")%>% check_result(.) %>% check_equal(., incorrect_msg="Did you group by transmission type before using mutate? Try checking your calculation - you should divide mpg by its standard deviation.")
+}
+```
+
+### Exercise 3
+
+Using the penguins data:
+
+```{r}
+penguins
+```
+
+calculate the log bill length and bill depth by species.
+
+```{r filter2, exercise=TRUE}
+
+
+```
+
+```{r filter2-solution}
+
+penguins %>% mutate(across(starts_with("bill_"), log))
+
+```
+
+```{r filter2-check}
+ex() %>%{
+  check_error(.) 
+  check_function(., "mutate")%>% check_result(.) %>% check_equal(., incorrect_msg="Did you take the log of the bill related columns correctly?")
 }
 ```

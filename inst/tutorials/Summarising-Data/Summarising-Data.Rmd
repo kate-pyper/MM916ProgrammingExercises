@@ -118,3 +118,27 @@ question("It can be a bad idea to do this sort of summary...why?",
   correct="Yes - in this case it is clear that the lower of each pair is the lower quartile, but it is not always so clear cut"
 )
 ```
+
+### Exercise 4
+
+Find the variance of the columns `mpg`, `disp`, `hp`, `drat`, `wt` and `qsec` (i.e. the continuous variables.)
+
+```{r filter4, exercise=TRUE}
+
+
+```
+
+```{r filter4-solution}
+
+mtcars %>% summarise(across(c(mpg, disp:qsec), var))
+
+```
+
+```{r filter4-check}
+ex() %>% {
+  check_error(.)
+  check_function(., "across", not_called_msg="The easiest way to do these computations is to use the across function")
+  check_function(., "summarise") %>% check_result(.) %>% check_equal(., incorrect_msg="Have you selected the correct variables?")
+}
+```
+
