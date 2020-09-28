@@ -160,13 +160,13 @@ What would the code be to do this in R?
 ```
 
 
-```{r exercise3-solution}
+```{r exercise4-solution}
 
 colour %>% anti_join(pet)
 
 ```
 
-```{r exercise3-check, exercise.setup="exercise1_setup"}
+```{r exercise4-check, exercise.setup="exercise1_setup"}
 
 # this is really unsatisfying - come back to this at some point
 ex() %>% check_function("anti_join") %>% check_result()
