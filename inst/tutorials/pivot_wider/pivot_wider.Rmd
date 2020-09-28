@@ -2,6 +2,8 @@
 title: "Exercise: pivot_wider"
 output: learnr::tutorial
 runtime: shiny_prerendered
+description: >
+  Second set of exercises relating to Activity 4.2 (Using tidyr to reshape data).
 ---
 
 ```{r setup, include=FALSE}
