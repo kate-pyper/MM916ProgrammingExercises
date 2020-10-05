@@ -89,18 +89,18 @@ penguins
 
 calculate the log bill length and bill depth by species.
 
-```{r filter2, exercise=TRUE}
+```{r filter3, exercise=TRUE}
 
 
 ```
 
-```{r filter2-solution}
+```{r filter3-solution}
 
 penguins %>% mutate(across(starts_with("bill_"), log))
 
 ```
 
-```{r filter2-check}
+```{r filter3-check}
 ex() %>%{
   check_error(.) 
   check_function(., "mutate")%>% check_result(.) %>% check_equal(., incorrect_msg="Did you take the log of the bill related columns correctly?")
