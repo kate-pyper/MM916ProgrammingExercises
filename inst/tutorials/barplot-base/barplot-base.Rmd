@@ -1,0 +1,99 @@
+---
+title: "Exercise: Barplots in Base R"
+output: learnr::tutorial
+runtime: shiny_prerendered
+description: >
+  Exercises related to creating bar plots in Base R.
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library(testwhat)
+knitr::opts_chunk$set(echo = FALSE)
+tutorial_options(exercise.timelimit = 60, exercise.checker=testwhat::testwhat_learnr)
+
+require(tidyverse)
+data(mtcars)
+penguins<- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-07-28/penguins.csv")
+```
+
+We are going to use the penguins data to produce a variety of bar plots using the base R function `barplot()`.
+
+```{r}
+head(penguins)
+
+```
+### Exercise 1
+
+Produce a bar plot to work out which species of penguin is most common:
+
+```{r barplot1, exercise=TRUE}
+
+
+
+```
+
+```{r barplot1-solution}
+barplot(table(penguins$species))
+```
+
+
+```{r barplot1-check}
+
+ex() %>% {
+  check_error(.)
+  check_function(., "table") %>% check_result(.) %>% check_equal(.)
+  check_function(., "barplot") %>% check_arg(., "height") %>% check_equal(.)
+}
+```
+
+### Exercise 2
+
+Produce a bar plot that will compare the distribution of species within each island: 
+
+```{r barplot2, exercise=TRUE}
+
+
+```
+
+```{r barplot2-solution}
+
+barplot(table(penguins$species, penguins$island), beside=TRUE, legend.text = TRUE)
+
+```
+
+```{r barplot2-check}
+ex() %>% {
+  check_error(.)
+  check_function(., "table") %>% check_result(.) %>% check_equal(.)
+  check_function(., "barplot") %>% {
+    check_arg(., "height") %>% check_equal(.)
+    check_arg(., "beside", arg_not_specified_msg="It's easier to visualise what's happening if the bars are not stacked") %>% check_equal(., incorrect_msg="It's easier to visualise what's happening if the bars are not stacked")
+    check_arg(., "legend.text", arg_not_specified_msg = "Interpretation will be easier with a legend")
+  }
+}
+```
+
+### Exercise 3
+
+Calculate the maximum bill length for each species of penguin and plot these on a bar plot (Tip: You may need to exclude missing values)
+
+```{r barplot3, exercise=TRUE}
+
+
+```
+
+```{r barplot3-solution}
+
+barplot(tapply(penguins$bill_length_mm, list(penguins$species), max, na.rm=TRUE))
+
+
+```
+
+```{r barplot3-check}
+ex() %>%{
+  check_error(.) 
+  check_function(., "tapply")%>% check_result(.) %>% check_equal(.)
+  check_function(., "barplot") %>% check_arg(., "height") %>% check_equal(.)
+}
+```

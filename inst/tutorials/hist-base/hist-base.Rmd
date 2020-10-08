@@ -1,0 +1,103 @@
+---
+title: "Exercise: Histograms in Base R"
+output: learnr::tutorial
+runtime: shiny_prerendered
+description: >
+  Exercises related to creating histograms in Base R.
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library(testwhat)
+knitr::opts_chunk$set(echo = FALSE)
+tutorial_options(exercise.timelimit = 60, exercise.checker=testwhat::testwhat_learnr)
+
+require(tidyverse)
+data(mtcars)
+penguins<- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-07-28/penguins.csv")
+```
+
+These exercises will explore the penguins data set using histograms.
+
+```{r}
+head(penguins)
+
+```
+### Exercise 1
+
+Produce a histogram of the bill depth.
+
+```{r hist1, exercise=TRUE}
+
+
+
+```
+
+```{r hist1-solution}
+
+hist(penguins$bill_depth_mm)
+
+```
+
+
+```{r hist1-check}
+
+ex() %>% {
+  check_error(.)
+  check_function(., "hist") %>% check_arg(., "x") %>% check_equal(.)
+}
+```
+
+### Exercise 2
+
+Produce a histogram of the flipper length - make the bars of the histogram blue: 
+
+```{r hist2, exercise=TRUE}
+
+
+```
+
+```{r hist2-solution}
+
+hist(penguins$flipper_length_mm, col="blue")
+
+```
+
+```{r hist2-check}
+ex() %>% {
+  check_error(.)
+  check_function(., "hist") %>% {
+    check_arg(., "x") %>% check_equal(.)
+    check_arg(., "col", arg_not_specified_msg="use the col argument to specify the bar colour")
+  }
+}
+```
+
+
+### Exercise 3
+
+The previous histogram has two "bumps" (the technical term for this is multimodal). Produce a histogram of flipper length by species:
+
+```{r hist3, exercise=TRUE}
+require(plotrix)
+
+```
+
+```{r hist3-solution}
+require(plotrix)
+
+multhist(split(penguins$flipper_length_mm, penguins$species), legend.text=TRUE)
+
+```
+
+```{r hist3-check}
+ex() %>% {
+  check_error(.)
+  check_function(., "multhist") %>% {
+    check_arg(., "x") %>% check_equal(., incorrect_msg="Use split() to separate the column you wish to plot by the grouping variable")
+    check_arg(., "legend.text", arg_not_specified_msg="Interpretation will be a lot easier with a legend") %>% check_equal(., incorrect_msg="Set legend.text=TRUE to add a legend")
+  }
+}
+
+success_msg("Great Work! You can see that the second mode is gentoo penguins - it is often the case with multimodal data that the difference in modes is caused by some underlying grouping.")
+```

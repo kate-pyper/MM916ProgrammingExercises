@@ -1,0 +1,99 @@
+---
+title: "Exercise: Box plots in Base R"
+output: learnr::tutorial
+runtime: shiny_prerendered
+description: >
+  Exercises related to creating box plots in Base R.
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library(testwhat)
+knitr::opts_chunk$set(echo = FALSE)
+tutorial_options(exercise.timelimit = 60, exercise.checker=testwhat::testwhat_learnr)
+
+require(tidyverse)
+data(mtcars)
+penguins<- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-07-28/penguins.csv")
+```
+
+We are going to use the penguins data to produce a variety of box plots using the base R function `boxplot()`.
+
+```{r}
+head(penguins)
+
+```
+
+### Exercise 1
+
+Produce a box plot showing body mass:
+
+```{r barplot1, exercise=TRUE}
+
+
+
+```
+
+```{r barplot1-solution}
+boxplot(penguins$body_mass_g)
+```
+
+
+```{r barplot1-check}
+
+ex() %>% {
+  check_error(.)
+  check_function(., "boxplot") %>% check_arg(., "x") %>% check_equal(.)
+}
+```
+
+### Exercise 2
+
+Produce a box plot that will compare the distribution of body weight by year: 
+
+```{r barplot2, exercise=TRUE}
+
+
+```
+
+```{r barplot2-solution}
+
+boxplot(body_mass_g~year, data=penguins)
+
+```
+
+```{r barplot2-check}
+ex() %>% {
+  check_error(.)
+  check_function(., "boxplot") %>% {
+    check_arg(., "formula", arg_not_specified_msg = "The easiest way to do this is to specify a formula") %>% check_equal(.)
+    check_arg(., "data", arg_not_specified_msg="Specifying the data argument when using a formula will make your code more readable") 
+  }
+}
+```
+
+### Exercise 3
+
+Produce a boxplot that will describe the distribution of body mass for each species within each year. The observations within a species should appear next to one another.
+
+```{r barplot3, exercise=TRUE}
+
+
+```
+
+```{r barplot3-solution}
+
+boxplot(body_mass_g~year+species, data=penguins)
+
+
+```
+
+```{r barplot3-check}
+ex() %>% {
+  check_error(.)
+  check_function(., "boxplot") %>% {
+    check_arg(., "formula", arg_not_specified_msg = "The easiest way to do this is to specify a formula") %>% check_equal(., eval=FALSE, eq_fun=function(x, y){str_replace_all(x, "[[:blank:]]", "")==str_replace_all(y, "[[:blank:]]", "")})
+    check_arg(., "data", arg_not_specified_msg="Specifying the data argument when using a formula will make your code more readable") 
+  }
+}
+```

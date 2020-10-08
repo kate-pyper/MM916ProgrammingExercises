@@ -1,0 +1,98 @@
+---
+title: "Exercise: Box plots in ggplot"
+output: learnr::tutorial
+runtime: shiny_prerendered
+description: >
+  Exercises related to creating box plots in ggplot.
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library(testwhat)
+knitr::opts_chunk$set(echo = FALSE)
+tutorial_options(exercise.timelimit = 60, exercise.checker=testwhat::testwhat_learnr)
+
+require(tidyverse)
+data(mtcars)
+penguins<- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-07-28/penguins.csv")
+penguins %>% mutate(year=as.factor(year)) -> penguins
+```
+
+We are going to use the penguins data to produce a variety of box plots using ggplot.
+
+```{r}
+head(penguins)
+
+```
+
+### Exercise 1
+
+Produce a box plot showing body mass:
+
+```{r barplot1, exercise=TRUE}
+
+
+
+```
+
+```{r barplot1-solution}
+ggplot(penguins) +
+  geom_boxplot(aes(body_mass_g))
+```
+
+
+```{r barplot1-check}
+
+ex() %>% {
+  check_error(.)
+  check_function(., "geom_boxplot") %>% check_arg(., "mapping") %>% check_equal(.)
+}
+```
+
+### Exercise 2
+
+Produce a box plot that will compare the distribution of body weight by year (you should not separate the groups using colour): 
+
+```{r barplot2, exercise=TRUE}
+
+
+```
+
+```{r barplot2-solution}
+penguins %>%
+  ggplot() + 
+  geom_boxplot(aes(x=year, y=body_mass_g))
+
+```
+
+```{r barplot2-check}
+ex() %>% {
+  check_error(.)
+  check_function(., "geom_boxplot") %>% check_arg(., "mapping") %>% check_equal(.)
+}
+```
+
+### Exercise 3
+
+Produce a boxplot that will describe the distribution of body mass for each species within each year. The observations within a species should appear next to one another.
+
+```{r barplot3, exercise=TRUE}
+
+
+```
+
+```{r barplot3-solution}
+
+penguins %>%
+  ggplot() + 
+  geom_boxplot(aes(x=species, y=body_mass_g, fill=year))
+
+
+```
+
+```{r barplot3-check}
+ex() %>% {
+  check_error(.)
+  check_function(., "geom_boxplot") %>% check_arg(., "mapping") %>% check_equal(.)
+}
+```

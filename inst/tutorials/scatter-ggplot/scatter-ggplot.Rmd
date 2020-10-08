@@ -1,0 +1,75 @@
+---
+title: "Exercise: Scatter plots in ggplot"
+output: learnr::tutorial
+runtime: shiny_prerendered
+description: >
+  Exercises related to creating scatter plots in ggplot.
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library(testwhat)
+knitr::opts_chunk$set(echo = FALSE)
+tutorial_options(exercise.timelimit = 60, exercise.checker=testwhat::testwhat_learnr)
+
+require(tidyverse)
+data(mtcars)
+penguins<- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-07-28/penguins.csv")
+```
+
+We are going to use the penguins data to produce a variety of scatter plots using the base R function `plot()`.
+
+```{r}
+head(penguins)
+
+```
+
+### Exercise 1
+
+Produce a plot of bill length against bill depth:
+
+```{r barplot1, exercise=TRUE}
+
+
+
+```
+
+```{r barplot1-solution}
+ggplot(penguins) +
+  geom_point(aes(bill_depth_mm, bill_length_mm))
+```
+
+
+```{r barplot1-check}
+
+ex() %>% {
+  check_error(.)
+  check_function(., "geom_point") %>% check_arg(., "mapping") %>% check_equal(.)
+}
+
+```
+
+### Exercise 2
+
+Produce a plot that will compare the bill length against the bill depth, with different colours indicating the three different species "Adelie","Gentoo","Chinstrap". Adelie should be coloured purple, Gentoo should be orange and Chinstrap should be red. 
+
+```{r barplot2, exercise=TRUE}
+
+
+```
+
+```{r barplot2-solution}
+
+ggplot(penguins) +
+  geom_point(aes(bill_depth_mm, bill_length_mm, colour=species))
+
+
+```
+
+```{r barplot2-check}
+ex() %>% {
+  check_error(.)
+  check_function(., "geom_point") %>% check_arg(., "mapping") %>% check_equal(.)
+}
+```
+

@@ -1,0 +1,107 @@
+---
+title: "Exercise: Histograms in ggplot"
+output: learnr::tutorial
+runtime: shiny_prerendered
+description: >
+  Exercises related to creating histograms in ggplot.
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library(testwhat)
+knitr::opts_chunk$set(echo = FALSE)
+tutorial_options(exercise.timelimit = 60, exercise.checker=testwhat::testwhat_learnr)
+
+require(tidyverse)
+data(mtcars)
+penguins<- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-07-28/penguins.csv")
+```
+
+These exercises will explore the penguins data set using histograms.
+
+```{r}
+head(penguins)
+
+```
+### Exercise 1
+
+Produce a histogram of the bill depth.
+
+```{r hist1, exercise=TRUE}
+
+
+
+```
+
+```{r hist1-solution}
+
+ggplot(penguins) +
+  geom_histogram(aes(bill_depth_mm))
+
+```
+
+
+```{r hist1-check}
+
+ex() %>% {
+  check_error(.)
+  check_function(., "ggplot") %>% check_arg(., "data")
+  check_function(., "geom_histogram") %>% check_arg(., "mapping") %>% check_equal(., incorrect_msg="Check the contents of aes(), have you selected the correct variable?")
+}
+```
+
+### Exercise 2
+
+Produce a histogram of the flipper length - make the bars of the histogram blue: 
+
+```{r hist2, exercise=TRUE}
+
+
+```
+
+```{r hist2-solution}
+
+ggplot(penguins) +
+  geom_histogram(aes(flipper_length_mm), fill="blue")
+
+```
+
+```{r hist2-check}
+ex() %>% {
+  check_error(.)
+  check_function(., "ggplot") %>% check_arg(., "data")
+  check_function(., "geom_histogram") %>% {
+    check_arg(., "mapping") %>% check_equal(., incorrect_msg="Check the contents of aes(), have you selected the correct variable?")
+    check_arg(., "fill", arg_not_specified_msg = "Use fill to change the bar colours") 
+  }
+}
+
+```
+
+
+### Exercise 3
+
+The previous histogram has two "bumps" (the technical term for this is multimodal). Produce a histogram of flipper length by species:
+
+```{r hist3, exercise=TRUE}
+
+
+```
+
+```{r hist3-solution}
+
+ggplot(penguins) +
+  # It is useful to specify alpha to be small to make the plot easier to read
+  geom_histogram(aes(flipper_length_mm, fill=species), alpha=0.2)
+
+```
+
+
+```{r hist3-check}
+
+ex() %>% {
+  check_error(.)
+  check_function(., "ggplot") %>% check_arg(., "data")
+  check_function(., "geom_histogram") %>% check_arg(., "mapping") %>% check_equal(., incorrect_msg="Check the contents of aes(), have you selected the correct variable?")
+}
+```

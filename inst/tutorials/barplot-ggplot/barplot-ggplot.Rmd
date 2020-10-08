@@ -1,0 +1,123 @@
+---
+title: "Exercise: Bar plots in ggplot"
+output: learnr::tutorial
+runtime: shiny_prerendered
+description: >
+  Exercises related to creating bar plots in ggplot.
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library(testwhat)
+knitr::opts_chunk$set(echo = FALSE)
+tutorial_options(exercise.timelimit = 60, exercise.checker=testwhat::testwhat_learnr)
+
+require(tidyverse)
+data(mtcars)
+penguins<- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-07-28/penguins.csv")
+```
+
+We are going to use the penguins data to produce a variety of bar plots using `ggplot`. These are the same plots that you created in the previous set of exercises, but it is goo
+
+```{r}
+head(penguins)
+
+```
+### Exercise 1
+
+Produce a bar plot to work out which species of penguin is most common:
+
+```{r barplot1, exercise=TRUE}
+
+
+
+```
+
+```{r barplot1-solution}
+
+ggplot(penguins) + 
+  geom_bar(aes(species))
+
+```
+
+
+```{r barplot1-check}
+
+ex() %>% {
+  check_error(.)
+  check_function(., "ggplot") %>% check_arg(., "data", arg_not_specified_msg = "Did you specify the data (either through the pipe or in ggplot)?")
+  check_function(., "geom_bar") %>% check_arg(., "mapping", arg_not_specified_msg = "You need to specify your aesthetics using aes()") %>% check_equal(.)
+  check_function(., "aes") 
+}
+
+```
+
+### Exercise 2
+
+Produce a bar plot that will compare the distribution of species within each island: 
+
+```{r barplot2, exercise=TRUE}
+
+
+```
+
+```{r barplot2-solution}
+
+
+ggplot(penguins) +
+  geom_bar(aes(island, fill=species), position=position_dodge())
+
+# Not particularly satisfying...you can force all levels to appear by adding a row of data for each missing bar:
+
+penguins %>% 
+  # Manually add data in 
+  bind_rows(data.frame(species=c("Chinstrap","Gentoo","Chinstrap","Gentoo"), island=c("Biscoe","Dream","Torgersen","Torgersen"))) %>% 
+  ggplot() +
+  geom_bar(aes(island, fill=species), position=position_dodge())
+
+```
+
+```{r barplot2-check}
+ex() %>% {
+  check_error(.)
+  check_function(., "ggplot") %>% check_arg(., "data", arg_not_specified_msg = "Did you specify the data (either through the pipe or in ggplot)?")
+  check_function(., "geom_bar") %>% {
+    check_arg(., "mapping", arg_not_specified_msg = "You need to specify your aesthetics using aes()") %>% check_equal(.)
+    check_arg(., "position", arg_not_specified_msg = "Specify position=position_dodge() to put the bars beside each other")
+  }
+  check_function(., "aes") 
+}
+success_msg("Great Work! Check out the solutions for a tip to get all of the bars even :)")
+```
+
+### Exercise 3
+
+Calculate the maximum bill length for each species of penguin and plot these on a bar plot (Tip: You may need to exclude missing values)
+
+*When finding the maximum call the column bill_length otherwise you may get told you are wrong when you aren't*
+
+```{r barplot3, exercise=TRUE}
+
+
+```
+
+```{r barplot3-solution}
+
+penguins %>% 
+  group_by(species) %>% 
+  summarise(bill_length=max(bill_length_mm, na.rm=TRUE)) %>% 
+  ggplot() +
+  geom_col(aes(species, bill_length))
+
+
+```
+
+```{r barplot3-check}
+ex() %>% {
+  check_error(.)
+  check_function(., "summarise", not_called_msg="You need to find the maximum bill length for each species") %>% check_result(.) %>% check_equal(.)
+  check_function(., "ggplot") %>% check_arg(., "data", arg_not_specified_msg = "Did you specify the data (either through the pipe or in ggplot)?")
+  check_function(., "geom_col", not_called_msg="geom_col() is the easiest way to plot this information") %>% check_arg(., "mapping", arg_not_specified_msg = "You need to specify your aesthetics using aes()") %>% check_equal(.)
+  check_function(., "aes")
+}
+```
