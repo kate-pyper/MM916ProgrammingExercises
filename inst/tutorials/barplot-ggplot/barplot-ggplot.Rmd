@@ -13,8 +13,13 @@ knitr::opts_chunk$set(echo = FALSE)
 tutorial_options(exercise.timelimit = 60, exercise.checker=testwhat::testwhat_learnr)
 
 require(tidyverse)
-data(mtcars)
 penguins<- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-07-28/penguins.csv")
+```
+
+```{r penguins_setup}
+
+penguins<- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-07-28/penguins.csv")
+
 ```
 
 We are going to use the penguins data to produce a variety of bar plots using `ggplot`. These are the same plots that you created in the previous set of exercises, but it is goo
@@ -27,7 +32,7 @@ head(penguins)
 
 Produce a bar plot to work out which species of penguin is most common:
 
-```{r barplot1, exercise=TRUE}
+```{r barplot1, exercise=TRUE, exercise.setup="penguins_setup"}
 
 
 
@@ -56,7 +61,7 @@ ex() %>% {
 
 Produce a bar plot that will compare the distribution of species within each island: 
 
-```{r barplot2, exercise=TRUE}
+```{r barplot2, exercise=TRUE, exercise.setup="penguins_setup"}
 
 
 ```
@@ -78,6 +83,7 @@ penguins %>%
 ```
 
 ```{r barplot2-check}
+
 ex() %>% {
   check_error(.)
   check_function(., "ggplot") %>% check_arg(., "data", arg_not_specified_msg = "Did you specify the data (either through the pipe or in ggplot)?")
@@ -88,6 +94,7 @@ ex() %>% {
   check_function(., "aes") 
 }
 success_msg("Great Work! Check out the solutions for a tip to get all of the bars even :)")
+
 ```
 
 ### Exercise 3
@@ -96,7 +103,7 @@ Calculate the maximum bill length for each species of penguin and plot these on 
 
 *When finding the maximum call the column bill_length otherwise you may get told you are wrong when you aren't*
 
-```{r barplot3, exercise=TRUE}
+```{r barplot3, exercise=TRUE, exercise.setup="penguins_setup"}
 
 
 ```
@@ -113,6 +120,7 @@ penguins %>%
 ```
 
 ```{r barplot3-check}
+
 ex() %>% {
   check_error(.)
   check_function(., "summarise", not_called_msg="You need to find the maximum bill length for each species") %>% check_result(.) %>% check_equal(.)
@@ -120,4 +128,5 @@ ex() %>% {
   check_function(., "geom_col", not_called_msg="geom_col() is the easiest way to plot this information") %>% check_arg(., "mapping", arg_not_specified_msg = "You need to specify your aesthetics using aes()") %>% check_equal(.)
   check_function(., "aes")
 }
+
 ```

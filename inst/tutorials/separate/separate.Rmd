@@ -9,17 +9,26 @@ description: >
 ```{r setup, include=FALSE}
 library(learnr)
 library(testwhat)
-knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(echo = FALSE, message=FALSE)
 tutorial_options(exercise.timelimit = 60, exercise.checker=testwhat::testwhat_learnr)
 
 require(tidyverse)
 
+set.seed(123)
 gender_age <-paste0(rep(c("F","M"), each=3), rep(c("0-14","15-44","45+")))
 df1 <- tibble(GenderAge=sample(gender_age, 33, replace=TRUE), Pre=rnorm(33, 10, 2), Post=rnorm(33, 15, 1))
 
 mammals <- read_csv("http://personal.strath.ac.uk/kate.pyper/HSM_Tidyverse/Data/tidyr/Mammals.csv")
 ```
 
+
+```{r gender_age_setup}
+
+set.seed(123)
+gender_age <-paste0(rep(c("F","M"), each=3), rep(c("0-14","15-44","45+")))
+df1 <- tibble(GenderAge=sample(gender_age, 33, replace=TRUE), Pre=rnorm(33, 10, 2), Post=rnorm(33, 15, 1))
+
+```
 ### Exercise 1
 
 The data frame df1 contains information on the levels of a vitamin pre- and post- treatment. The data contain information on Gender (denoted "M" or "F") and age group. These are contained in a single column. As shown below:
@@ -32,7 +41,7 @@ df1
 
 Use the `separate()` function to get this data frame into an appropriate form, with appropriately named columns
 
-```{r separate1, exercise=TRUE}
+```{r separate1, exercise=TRUE, exercise.setup="gender_age_setup"}
 # Separate Gender and Age
 
 
@@ -59,9 +68,15 @@ ex() %>% {
 
 ### Exercise 2
 
+```{r mammals_setup}
+
+mammals <- read_csv("http://personal.strath.ac.uk/kate.pyper/HSM_Tidyverse/Data/tidyr/Mammals.csv")
+
+```
+
 A data frame called `mammals` has been made. It contains a column called `orderGenus` that contains the animal order and its genus separated by a colon `:`. These two pieces of information should be separated into two columns.
 
-```{r separate2, exercise=TRUE}
+```{r separate2, exercise=TRUE, exercise.setup="mammals_setup"}
 # Separate Order and Genus
 
 
@@ -69,7 +84,7 @@ A data frame called `mammals` has been made. It contains a column called `orderG
 
 ```{r separate2-solution}
 
-df1 %>% separate(orderGenus, c("Order","Genus"), ":")
+mammals %>% separate(orderGenus, c("Order","Genus"), ":")
 
 ```
 

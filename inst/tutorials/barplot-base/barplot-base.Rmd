@@ -13,10 +13,14 @@ knitr::opts_chunk$set(echo = FALSE)
 tutorial_options(exercise.timelimit = 60, exercise.checker=testwhat::testwhat_learnr)
 
 require(tidyverse)
-data(mtcars)
 penguins<- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-07-28/penguins.csv")
 ```
 
+```{r peguins_setup}
+
+penguins<- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-07-28/penguins.csv")
+
+```
 We are going to use the penguins data to produce a variety of bar plots using the base R function `barplot()`.
 
 ```{r}
@@ -27,7 +31,7 @@ head(penguins)
 
 Produce a bar plot to work out which species of penguin is most common:
 
-```{r barplot1, exercise=TRUE}
+```{r barplot1, exercise=TRUE, exercise.setup="penguins_setup"}
 
 
 
@@ -51,7 +55,7 @@ ex() %>% {
 
 Produce a bar plot that will compare the distribution of species within each island: 
 
-```{r barplot2, exercise=TRUE}
+```{r barplot2, exercise=TRUE, exercise.setup="penguins_setup"}
 
 
 ```
@@ -78,7 +82,7 @@ ex() %>% {
 
 Calculate the maximum bill length for each species of penguin and plot these on a bar plot (Tip: You may need to exclude missing values)
 
-```{r barplot3, exercise=TRUE}
+```{r barplot3, exercise=TRUE, exercise.setup="penguins_setup"}
 
 
 ```

@@ -35,6 +35,7 @@ knitr::kable(pet)
 I want to keep all rows in both data sets while merging rows which have a match.
 
 ```{r Question1, echo=FALSE}
+
 question("What type of join could you use here?",
   answer("left"),
   answer("right"),
@@ -43,6 +44,7 @@ question("What type of join could you use here?",
   answer("anti"),
   answer("semi")
 )
+
 ```
 
 What would the code be to do this in R?
@@ -73,6 +75,7 @@ ex() %>% check_function("full_join") %>% check_result()
 I want to merge the two data sets but only keep the rows in both data sets which have a match.
 
 ```{r Question2, echo=FALSE}
+
 question("What type of join could you use here?",
   answer("left"),
   answer("right"),
@@ -81,6 +84,7 @@ question("What type of join could you use here?",
   answer("anti"),
   answer("semi")
 )
+
 ```
 
 What would the code be to do this in R?
@@ -108,6 +112,7 @@ ex() %>% check_function("inner_join") %>% check_result()
 I want to keep all the rows in the pets data set that have a match in the colour data set - I do not want to merge the data sets.
 
 ```{r Question3, echo=FALSE}
+
 question("What type of join could you use here?",
   answer("left"),
   answer("right"),
@@ -116,6 +121,7 @@ question("What type of join could you use here?",
   answer("anti"),
   answer("semi", correct=TRUE)
 )
+
 ```
 
 What would the code be to do this in R?
@@ -130,7 +136,7 @@ pet %>% semi_join(colour)
 
 ```
 
-```{r exercise3-check, exercise.setup="exercise1_setup"}
+```{r exercise3-check}
 
 # this is really unsatisfying - come back to this at some point
 ex() %>% check_function("semi_join") %>% check_result()
@@ -143,6 +149,7 @@ ex() %>% check_function("semi_join") %>% check_result()
 I want to keep all the rows in the colour data set that have a match in the pet data set - I do not want to merge the data sets.
 
 ```{r Question4, echo=FALSE}
+
 question("What type of join could you use here?",
   answer("left"),
   answer("right"),
@@ -151,6 +158,7 @@ question("What type of join could you use here?",
   answer("anti", correct=TRUE),
   answer("semi")
 )
+
 ```
 
 What would the code be to do this in R?
@@ -166,7 +174,7 @@ colour %>% anti_join(pet)
 
 ```
 
-```{r exercise4-check, exercise.setup="exercise1_setup"}
+```{r exercise4-check}
 
 # this is really unsatisfying - come back to this at some point
 ex() %>% check_function("anti_join") %>% check_result()

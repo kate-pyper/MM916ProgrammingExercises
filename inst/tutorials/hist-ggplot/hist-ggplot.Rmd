@@ -9,13 +9,21 @@ description: >
 ```{r setup, include=FALSE}
 library(learnr)
 library(testwhat)
-knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(echo = FALSE, message=FALSE)
 tutorial_options(exercise.timelimit = 60, exercise.checker=testwhat::testwhat_learnr)
 
 require(tidyverse)
-data(mtcars)
+
 penguins<- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-07-28/penguins.csv")
+
 ```
+
+```{r penguins_setup}
+
+penguins<- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-07-28/penguins.csv")
+
+```
+
 
 These exercises will explore the penguins data set using histograms.
 
@@ -27,7 +35,7 @@ head(penguins)
 
 Produce a histogram of the bill depth.
 
-```{r hist1, exercise=TRUE}
+```{r hist1, exercise=TRUE, exercise.setup="penguins_setup"}
 
 
 
@@ -54,7 +62,7 @@ ex() %>% {
 
 Produce a histogram of the flipper length - make the bars of the histogram blue: 
 
-```{r hist2, exercise=TRUE}
+```{r hist2, exercise=TRUE, exercise.setup="penguins_setup"}
 
 
 ```
@@ -83,7 +91,7 @@ ex() %>% {
 
 The previous histogram has two "bumps" (the technical term for this is multimodal). Produce a histogram of flipper length by species:
 
-```{r hist3, exercise=TRUE}
+```{r hist3, exercise=TRUE, exercise.setup="penguins_setup"}
 
 
 ```

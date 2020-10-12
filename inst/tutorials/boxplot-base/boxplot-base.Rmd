@@ -9,15 +9,20 @@ description: >
 ```{r setup, include=FALSE}
 library(learnr)
 library(testwhat)
-knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(echo = FALSE, message=FALSE)
 tutorial_options(exercise.timelimit = 60, exercise.checker=testwhat::testwhat_learnr)
 
 require(tidyverse)
-data(mtcars)
 penguins<- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-07-28/penguins.csv")
 ```
 
-We are going to use the penguins data to produce a variety of box plots using the base R function `boxplot()`.
+```{r penguins_setup, message=FALSE}
+
+penguins<- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-07-28/penguins.csv")
+
+```
+
+We are going to use the penguins data to produce a variety of box plots using ggplot.
 
 ```{r}
 head(penguins)
@@ -28,14 +33,16 @@ head(penguins)
 
 Produce a box plot showing body mass:
 
-```{r barplot1, exercise=TRUE}
+```{r barplot1, exercise=TRUE, exercise.setup="penguins_setup", message=FALSE}
 
 
 
 ```
 
 ```{r barplot1-solution}
+
 boxplot(penguins$body_mass_g)
+
 ```
 
 
@@ -45,13 +52,14 @@ ex() %>% {
   check_error(.)
   check_function(., "boxplot") %>% check_arg(., "x") %>% check_equal(.)
 }
+
 ```
 
 ### Exercise 2
 
 Produce a box plot that will compare the distribution of body weight by year: 
 
-```{r barplot2, exercise=TRUE}
+```{r barplot2, exercise=TRUE, exercise.setup="penguins_setup"}
 
 
 ```
@@ -63,6 +71,7 @@ boxplot(body_mass_g~year, data=penguins)
 ```
 
 ```{r barplot2-check}
+
 ex() %>% {
   check_error(.)
   check_function(., "boxplot") %>% {
@@ -70,13 +79,14 @@ ex() %>% {
     check_arg(., "data", arg_not_specified_msg="Specifying the data argument when using a formula will make your code more readable") 
   }
 }
+
 ```
 
 ### Exercise 3
 
 Produce a boxplot that will describe the distribution of body mass for each species within each year. The observations within a species should appear next to one another.
 
-```{r barplot3, exercise=TRUE}
+```{r barplot3, exercise=TRUE, exercise.setup="penguins_setup"}
 
 
 ```
@@ -89,6 +99,7 @@ boxplot(body_mass_g~year+species, data=penguins)
 ```
 
 ```{r barplot3-check}
+
 ex() %>% {
   check_error(.)
   check_function(., "boxplot") %>% {
@@ -96,4 +107,5 @@ ex() %>% {
     check_arg(., "data", arg_not_specified_msg="Specifying the data argument when using a formula will make your code more readable") 
   }
 }
+
 ```

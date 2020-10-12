@@ -13,8 +13,15 @@ knitr::opts_chunk$set(echo = FALSE)
 tutorial_options(exercise.timelimit = 60, exercise.checker=testwhat::testwhat_learnr)
 
 require(tidyverse)
-data(mtcars)
+
 penguins<- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-07-28/penguins.csv")
+
+```
+
+```{r penguins_setup}
+
+penguins<- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-07-28/penguins.csv")
+
 ```
 
 We are going to use the penguins data to produce a variety of scatter plots using the base R function `plot()`.
@@ -28,7 +35,7 @@ head(penguins)
 
 Produce a plot of bill length against bill depth:
 
-```{r barplot1, exercise=TRUE}
+```{r barplot1, exercise=TRUE, exercise.setup="penguins_setup"}
 
 
 
@@ -53,7 +60,7 @@ ex() %>% {
 
 Produce a plot that will compare the bill length against the bill depth, with different colours indicating the three different species "Adelie","Gentoo","Chinstrap". Adelie should be coloured purple, Gentoo should be orange and Chinstrap should be red. 
 
-```{r barplot2, exercise=TRUE}
+```{r barplot2, exercise=TRUE, exercise.setup="penguins_setup"}
 
 
 ```
